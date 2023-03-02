@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.github.portifolio.model.Endereco;
 import com.github.portifolio.model.Pessoa;
@@ -27,6 +28,9 @@ public class CrudPessoaApplication implements CommandLineRunner {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CrudPessoaApplication.class, args);
@@ -49,7 +53,7 @@ public class CrudPessoaApplication implements CommandLineRunner {
 		tel2 = new Telefone(null, "53", "99125-4000");
 
 		pessoa1 = new Pessoa(null, "Felipe Damasceno Bicca", Arrays.asList(tel1, tel2), Arrays.asList(end1, end2),
-				new Date(), "felipedbicca@hotmail.com", "017.246.580-00", "123456");
+				new Date(), "felipedbicca@hotmail.com", "017.246.580-00", passwordEncoder.encode("123456"));
 
 		pessoaRepository.save(pessoa1);
 		telefoneRepository.saveAll( Arrays.asList(tel1, tel2));
